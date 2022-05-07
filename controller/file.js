@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/get",async(req,res)=>{
     const {url} = req.body;
     const slideInfo = await getSlideInfo(url);
+    const downloadFlag = downloadImage(slideInfo)
     res.send(slideInfo);
 })
 
