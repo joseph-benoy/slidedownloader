@@ -10,8 +10,7 @@ const router = express.Router();
 router.post("/get",async(req,res)=>{
     const {url} = req.body;
     const slideInfo = await getSlideInfo(url);
-    const filePath = await downloadImage(slideInfo);
-    res.sendFile(path.join(__dirname,))
+    const filePath = await downloadImage(slideInfo,res);
 })
 
 module.exports = {

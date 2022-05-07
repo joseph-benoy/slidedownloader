@@ -2,8 +2,9 @@ const { default: axios } = require('axios');
 const fs = require('fs-extra');
 const { v4: uuidv4 } = require('uuid');
 const PDFDocument = require("pdfkit");
+var rimraf = require("rimraf");
 
-const downloadImage = async(slideInfo)=>{
+const downloadImage = async(slideInfo,res)=>{
     try{
         const tempDirName = uuidv4();
         const urlSepIndex = slideInfo.imgUrl.lastIndexOf("-");
@@ -14,8 +15,9 @@ const downloadImage = async(slideInfo)=>{
             fs.mkdirSync(dirName);
         }
         let doc = new PDFDocument({autoFirstPage:false});
-        const pdfFileName = dirName+"output.pdf";
-        doc.pipe(fs.createWriteStream(pdfFileName));
+        const pdfFileName = dirName+slideInfo.title+".pdf";
+        var filePipe;
+        doc.pipe(filePipe= fs.createWriteStream(pdfFileName));
         for(let i = 1;i<=slideInfo.slideCount;i++){
             const tempUrl = prefix+i+postfix;
             const res = await axios.get(tempUrl,{
@@ -27,7 +29,12 @@ const downloadImage = async(slideInfo)=>{
             doc.image(img,0,0);
         }
         doc.end();
-        return tempDirName+"/output.pdf";
+        filePipe.on("finish",()=>{
+            res.download(pdfFileName);
+            rimraf(dirName,(e)=>{
+                console.log(e)
+            });
+        })
     }
     catch(e){
         throw new Error("cannot download image : "+e.message);

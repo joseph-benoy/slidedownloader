@@ -11,10 +11,12 @@ const getSlideInfo = async(url)=>{
         const imgUrl = (imgSrcSet[imgSrcSet.length-1]).split(" ")[0];
         const slideCount = $(".slide").length;
         const imgType = imgUrl.split(".").pop().split("?")[0];
+        const title = $('title').text();
         return {
             imgUrl,
             slideCount,
-            imgType
+            imgType,
+            title
         }
     }
     catch(e){
