@@ -30,7 +30,7 @@ const downloadImage = async(slideInfo,res)=>{
         }
         doc.end();
         filePipe.on("finish",()=>{
-            res.download(pdfFileName);
+            res.sendFile(pdfFileName);
             rimraf(dirName,(e)=>{
                 console.log(e)
             });

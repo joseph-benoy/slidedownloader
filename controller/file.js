@@ -7,7 +7,11 @@ const { getSlideInfo } = require("../services/slideinfo");
 
 const router = express.Router();
 
-router.post("/get",async(req,res)=>{
+router.get("/",(req,res)=>{
+    res.render("index");
+})
+
+router.post("/",async(req,res)=>{
     try{
         const {url} = req.body;
         const slideInfo = await getSlideInfo(url);

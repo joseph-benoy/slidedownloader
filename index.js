@@ -10,11 +10,8 @@ app.use(express.urlencoded());
 
 app.use("/web/file/",express.static(path.join(__dirname,"services/temp/")));
 
-app.get("/",(req,res)=>{
-  res.render("index");
-})
 
-app.use("/web/file",fileRouter);
+app.use("/",fileRouter);
 
 
 
