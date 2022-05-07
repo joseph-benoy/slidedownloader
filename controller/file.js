@@ -8,9 +8,14 @@ const { getSlideInfo } = require("../services/slideinfo");
 const router = express.Router();
 
 router.post("/get",async(req,res)=>{
-    const {url} = req.body;
-    const slideInfo = await getSlideInfo(url);
-    const filePath = await downloadImage(slideInfo,res);
+    try{
+        const {url} = req.body;
+        const slideInfo = await getSlideInfo(url);
+        const filePath = await downloadImage(slideInfo,res);
+    }
+    catch(e){
+        res.render("error");
+    }
 })
 
 module.exports = {
