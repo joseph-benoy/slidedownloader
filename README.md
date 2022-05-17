@@ -1,2 +1,2 @@
 # slidedownloader
-Instant Slideshare file  downloader
+Instant Slideshare file  downloader using nodejs and cheerio 
